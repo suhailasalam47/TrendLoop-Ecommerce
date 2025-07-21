@@ -1,0 +1,117 @@
+{% extends 'base.html' %}
+
+{% load static %}
+{% block content %}
+
+<style>
+.quantity-controls {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  justify-content: center;
+}
+
+.qty-btn {
+  width: 32px;
+  height: 32px;
+  font-size: 18px;
+  font-weight: bold;
+  border: 1px solid #ccc;
+  background-color: #f8f8f8;
+  cursor: pointer;
+  border-radius: 4px;
+}
+
+.qty-input {
+  width: 50px;
+  height: 32px;
+  text-align: center;
+  font-size: 16px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+</style>
+{% if cart_items %}
+{% include 'messages.html' %}
+ <!-- Shopping Cart Section Begin -->
+    <section class="shopping-cart spad">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8">
+                    <div class="shopping__cart__table">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Product</th>
+                                    <th>Quantity</th>
+                                    <th>Total</th>
+                                    <th></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for item in cart_items %}
+                                <tr>
+                                    <td class="product__cart__item">
+                                        <div class="product__cart__item__pic">
+                                           <a href="{% url 'product_detail' item.product.id %}"><img style="width: 100px; height:100px" src="{{item.product.product_image.url}}" alt=""></a> 
+                                        </div>
+                                        <div class="product__cart__item__text">
+                                            <h6>{{item.product.product_name}}</h6>
+                                            <h5>${{item.product.price}}</h5>
+                                        </div>
+                                    </td>
+                                    <td class="quantity__item">
+                                        <div class="quantity">
+                                            <form action="{% url 'update_quantity' item.id %}" method="post">
+                                                {% csrf_token %}
+                                            <button type="submit" class="qty-btn minus" name="action" value="decrease">-</button>
+                                            <input type="text" class="qty-input" value="{{ item.quantity }}" readonly>
+                                            <button type="submit" class="qty-btn plus" name="action" value="increase">+</button>
+                                            </form>
+                                        </div>
+                                    </td>
+                                    <td class="cart__price">${{item.sub_total}}</td>
+                                    <td class="cart__close">
+                                    <form action="{% url 'remove_item' item.id %}" method="post">
+                                        {% csrf_token %}
+                                    <button style="border: none;" type="submit"><i class="fa fa-close"></i></button>
+                                    </form>
+                                    </td>
+                                </tr>
+                                {% endfor %}
+                                
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="row">
+                        <div class="col-lg-6 col-md-6 col-sm-6">
+                            <div class="continue__btn">
+                                <a href="{% url 'store' %}">Continue Shopping</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-4 mt-5"> 
+                    <div class="cart__total">
+                        <h6>Cart total</h6>
+                        <ul>
+                            <li>Subtotal <span>$ {{sub_total}}</span></li>
+                            <li>Tax <span>$ {{tax}}</span></li>
+                            <li>Total <span>$ {{total}}</span></li>
+                        </ul>
+                        <a href="{% url 'checkout' %}" class="primary-btn">Proceed to checkout</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+{% else %}
+<div class="text-center mb-5 mt-5">
+    <h3 style="color: brown;"> <strong>Your cart is empty!</strong></h3><br>
+    <a class="primary-btn mb-5" style="text-decoration: none;" href="{% url 'store' %}">Continue Shopping</a><br>
+</div><br><br><br><br><br>
+{% endif %}
+    <!-- Shopping Cart Section End -->
+<br>
+{% endblock %}

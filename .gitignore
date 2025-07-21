@@ -1,0 +1,42 @@
+# Byte-compiled / optimized / compiled files
+__pycache__/
+*.pyc
+*.pyd
+*.pyo
+*.mo
+
+# Virtual environment
+env/
+venv/
+.venv/
+
+# Database files
+*.sqlite3
+db.sqlite3
+
+# Media and static files (often collected and served separately)
+media/
+static/ # If you're compiling static assets locally and don't want them in Git
+
+# Environment variables and sensitive data
+.env
+local_settings.py # Or any other file containing sensitive local settings
+
+# IDE-specific files
+.idea/ # PyCharm
+.vscode/ # VS Code
+*.sublime-project
+*.sublime-workspace
+
+# Logs
+*.log
+
+# Test and coverage files
+.coverage
+htmlcov/
+.tox/
+
+# Other temporary files
+*~
+*.bak
+*.swp

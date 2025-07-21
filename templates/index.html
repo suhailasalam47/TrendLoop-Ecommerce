@@ -1,0 +1,76 @@
+{% extends 'base.html'%}
+{% load static %}
+{% block content %}
+    <!-- Hero Section Begin -->
+    <section class="hero">
+        <div class="hero__slider owl-carousel">
+            <div class="hero__items set-bg" data-setbg="{% static 'img/hero/hero-1.jpg' %}">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-xl-5 col-lg-7 col-md-8">
+                            <div class="hero__text">
+                                <h6>Summer Collection</h6>
+                                <h2>Fall - Winter Collections 2030</h2>
+                                <p>A specialist label creating luxury essentials. Ethically crafted with an unwavering
+                                commitment to exceptional quality.</p>
+                                <a href="{% url 'store' %}" class="primary-btn">Shop now <span class="arrow_right"></span></a>
+                                <div class="hero__social">
+                                    <a href="#"><i class="fa fa-facebook"></i></a>
+                                    <a href="#"><i class="fa fa-twitter"></i></a>
+                                    <a href="#"><i class="fa fa-pinterest"></i></a>
+                                    <a href="#"><i class="fa fa-instagram"></i></a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- Hero Section End -->
+
+    <!-- Product Section Begin -->
+    <section class="product spad">
+        <div class="container">
+            <div class="row mt-4">
+                <div class="col-lg-9">
+                    <ul class="filter__controls">
+                        <li class="active" data-filter="*">Best Sellers</li>
+                    </ul>
+                </div>
+                <div class="col-lg-3">                  
+                    <ul class="filter__controls">
+                        <a href="{% url 'store' %}"><h5 style="color: brown;">All Products</h5></a>
+                    </ul>
+                </div>
+            </div>
+            <div class="row product__filter">
+                {% for product in products %}
+                <div class="col-lg-3 col-md-6 col-sm-6 col-md-6 col-sm-6 mix new-arrivals">
+                    <div class="product__item">
+                        <a href="{% url 'product_detail' product.id %}"><div class="product__item__pic set-bg" data-setbg="{{ product.product_image.url }}">
+                            <span class="label">New</span>
+                        </div></a>
+                        <div class="product__item__text">
+                            <h6>{{product.product_name}}</h6>
+                            <a href="{% url 'product_detail' product.id %}" class="add-cart">{{product.product_name}}</a>
+                            <div class="rating">
+                                <i class="fa fa-star-o"></i>
+                                <i class="fa fa-star-o"></i>
+                                <i class="fa fa-star-o"></i>
+                                <i class="fa fa-star-o"></i>
+                                <i class="fa fa-star-o"></i>
+                            </div>
+                            <h5>${{product.price}}</h5>
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+    </section>
+    <!-- Product Section End -->
+
+
+
+{% endblock %}
